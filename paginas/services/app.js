@@ -6,9 +6,13 @@ window.onload = () => {
 
     inputs.forEach(input => {
         input.addEventListener("input", () => {
-            validarInput(input);
+            validarInput(input, false);
         })
 
+        input.addEventListener("blur", () => {
+            validarInput(input);
+            //passou como parametro so input entao automaticamente o outro parametro é true)
+        });
     });
 
 };
