@@ -1,5 +1,51 @@
 import { validarDataNascimento } from "./validarDataNascimento";
 
+const retornarMensagemDeErro = (tipo, validity) => {
+  let mensagemDeErro = "";
+  const tiposErro = [valueMissing, typeMismatch, rangeUnderflow,customError];
+
+  const mensagensDeErro = {
+    email: {
+      valueMissing: "o email é necessário",
+      typeMismatch: "Este não é um e-mail válido"
+    },
+
+    senha: {
+      valueMissing: "senha é necessária.",
+      tooShort: "A senha deve ter no mínimo 4 caracteres;"
+    }
+    dataNascimento: {
+      valueMissing: "Data de nascimento é necessária",
+      rangeUnderflow: "A data mínima é 01/01/1901.",
+      customError: "A idade mínima é 18 anos"
+    }
+    cpf: {
+      valueMissing: "o CPF é necessário",
+    }
+    rg: {
+      valueMissing: "o RG é necessário",
+    }
+    cep: {
+      valueMissing: "o CEP é necessário",
+    }
+    logradouro: {
+      valueMissing: "o lougradouro é necessário",
+    }
+    cidade: {
+      valueMissing: "Cidade é necessária",
+    }
+    estado: {
+      valueMissing: "o estado é necessário",
+    }
+  };
+
+  tiposDeErro.forEach(erro => {
+    if (validity[erro]) {
+      mensagemDeErro = mensagensDeErro[tipo][erro];
+    }
+  });
+  return mensagemDeErro;
+};
 export const validarInput = (input, adicionarErro = true) => {
   const classeElementoErro = "erro-validacao";
   const classeInputErro = "possui-erro-validacao";
@@ -10,30 +56,31 @@ export const validarInput = (input, adicionarErro = true) => {
   const elementoEhValido = input.validity.valid;
   const tipo = input.dataset.tipo;
   const validadoresEspecificos = {
-    dataNascimento: input => validarDataNascimento (input)
+    dataNascimento: input => validarDataNascimento(input)
   };
 
-  if (validadoresEspecificos[tipo]){
-      validadoresEspecificos[tipo](input);
+  if (validadoresEspecificos[tipo]) {
+    validadoresEspecificos[tipo](input);
   }
 
-  if (!elementoEhValido){
+  if (!elementoEhValido) {
     //adicionando as classes no elemento erro
     elementoErro.className = classeElementoErro;
-    elementoErro.textContent = retornarMensagemDeErro( tipo, validity)
+    elementoErro.textContent = retornarMensagemDeErro(tipo, input.validity)
+    //parametro tipo está no HTML, data-tipo,
 
     );
-    input.classList.add(classeInputErro);
-    //add um texto 
-    elementoErro.textContent = "Há um erro aqui!"
-    //onde add esse elemento (queremos embaixo do campo = AFTER)
-    input.after(elementoErro);
-    if(adicionarErro){
-      input.after(elementoErro);
-      input.classList.add(classeInputErro);
-    }
-  } else{ //válido
-    elementoErro.remove();
-    input.classList.remove(classInputErro);
-  }
+input.classList.add(classeInputErro);
+//add um texto 
+elementoErro.textContent = "Há um erro aqui!"
+//onde add esse elemento (queremos embaixo do campo = AFTER)
+input.after(elementoErro);
+if (adicionarErro) {
+  input.after(elementoErro);
+  input.classList.add(classeInputErro);
+}
+  } else { //válido
+  elementoErro.remove();
+  input.classList.remove(classInputErro);
+}
 };
