@@ -1,4 +1,5 @@
-import { validarDataNascimento } from "./validarDataNascimento";
+import { validarDataNascimento } from "./validarDataNascimento.js";
+import { validarCPF } from "./validarCPF.js";
 
 const retornarMensagemDeErro = (tipo, validity) => {
   let mensagemDeErro = "";
@@ -56,7 +57,8 @@ export const validarInput = (input, adicionarErro = true) => {
   const elementoEhValido = input.validity.valid;
   const tipo = input.dataset.tipo;
   const validadoresEspecificos = {
-    dataNascimento: input => validarDataNascimento(input)
+    dataNascimento: input => validarDataNascimento(input),
+    cpf: input => validarCPF (input)
   };
 
   if (validadoresEspecificos[tipo]) {
