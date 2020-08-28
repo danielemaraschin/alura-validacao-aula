@@ -3,7 +3,13 @@ import { validarCPF } from "./validarCPF.js";
 
 const retornarMensagemDeErro = (tipo, validity) => {
   let mensagemDeErro = "";
-  const tiposErro = [valueMissing, typeMismatch, rangeUnderflow,customError];
+  const tiposErro = [
+  "valueMissing", 
+  "typeMismatch",
+  "tooShort",
+  "rangeUnderflow",
+  "customError"
+];
 
   const mensagensDeErro = {
     email: {
@@ -21,7 +27,8 @@ const retornarMensagemDeErro = (tipo, validity) => {
       customError: "A idade mínima é 18 anos"
     }
     cpf: {
-      valueMissing: "o CPF é necessário",
+      valueMissing: "o CPF é necessário.",
+      customError: "O CPF não é válido."
     }
     rg: {
       valueMissing: "o RG é necessário",
