@@ -8,7 +8,8 @@ const retornarMensagemDeErro = (tipo, validity) => {
   "typeMismatch",
   "tooShort",
   "rangeUnderflow",
-  "customError"
+  "customError",
+  "patternMismatch"
 ];
 
   const mensagensDeErro = {
@@ -35,6 +36,7 @@ const retornarMensagemDeErro = (tipo, validity) => {
     }
     cep: {
       valueMissing: "o CEP é necessário",
+      patternMismatch: "Este não é um cep válido"
     }
     logradouro: {
       valueMissing: "o lougradouro é necessário",
