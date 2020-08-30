@@ -1,5 +1,5 @@
 export const validarCPF = input =>  {
-    const cpfNumeros = input.value.replace(".", "");
+    const cpfNumeros = input.value.replace(/\D/g, "");
 
     if (ehUmCpfComNumerosRepetidos (cpfNumeros)) {
         input.setCustomValidity("Este não é um CPF válido");
