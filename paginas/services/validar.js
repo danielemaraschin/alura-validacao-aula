@@ -1,6 +1,7 @@
 import { validarDataNascimento } from "./validarDataNascimento.js";
 import { validarCPF } from "./validarCPF.js";
 import {recuperarEndereco} from "./recuperarEndereco.js";
+import {validarPreco} from "./validarPreco.js";
 
 const retornarMensagemDeErro = (tipo, validity) => {
   let mensagemDeErro = "";
@@ -49,6 +50,14 @@ const retornarMensagemDeErro = (tipo, validity) => {
     estado: {
       valueMissing: "o estado é necessário",
     }
+    preco: {
+      valueMissing: "o preço é necessário",
+      customError:"O valor deve ser maior que zero."
+    }
+    nomeProduto: {
+      valueMissing: "O nome do produto é necessário"
+    }
+
   };
 
   tiposDeErro.forEach(erro => {
@@ -71,6 +80,7 @@ export const validarInput = (input, adicionarErro = true) => {
     dataNascimento: input => validarDataNascimento(input),
     cpf: input => validarCPF (input),
     cep: input => recuperarEndereco(input),
+    preco: input => validarPreco(input)
   };
 
   if (validadoresEspecificos[tipo]) {
